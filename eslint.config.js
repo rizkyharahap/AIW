@@ -1,13 +1,11 @@
 import pluginVue from "eslint-plugin-vue";
-
-import pluginVitest from "@vitest/eslint-plugin";
+import { defineConfigWithVueTs, vueTsConfigs } from "@vue/eslint-config-typescript";
 import skipFormatting from "@vue/eslint-config-prettier/skip-formatting";
-import vueTsEslintConfig from "@vue/eslint-config-typescript";
 
 export default [
   {
     name: "app/files-to-lint",
-    files: ["**/*.{ts,mts,vue}"],
+    files: ["**/*.{ts,mts,tsx,vue}"],
   },
 
   {
@@ -16,7 +14,12 @@ export default [
   },
 
   ...pluginVue.configs["flat/essential"],
-  ...vueTsEslintConfig({}),
+
+  defineConfigWithVueTs({
+    extends: [
+      ...vueTsConfigs.recommended, // gunakan config TS terbaru untuk Vue
+    ],
+  }),
 
   {
     ...pluginVitest.configs.recommended,
