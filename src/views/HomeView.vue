@@ -3,6 +3,60 @@ import IcLinkedIn from "@/assets/icons/ic-linkedin.svg";
 import IcInstagram from "@/assets/icons/ic-instagram.svg";
 import IcMail from "@/assets/icons/ic-mail.svg";
 import IcWhatsapp from "@/assets/icons/ic-whatsapp.svg";
+import { onBeforeUnmount, onMounted } from "vue";
+
+let observer: IntersectionObserver | null = null;
+
+const handleIntersect = (entries: IntersectionObserverEntry[]) => {
+  entries.forEach((entry) => {
+    const target = entry.target as HTMLElement;
+    const boundingClientRect = target.getBoundingClientRect();
+
+    if (entry.isIntersecting) {
+      // Ensure element is visible when it comes into view
+      setTimeout(() => {
+        target.classList.add("fade-in"); // Add fade-in class when visible
+        target.classList.remove("fade-out-up"); // Remove fade-out-up class
+        target.classList.remove("fade-out-down"); // Remove fade-out-down class
+      }, 200);
+    } else {
+      target.classList.remove("fade-in"); // Remove fade-in class when not visible
+      // Only add fade-out classes if element was previously visible
+      if (
+        target.classList.contains("fade-in") ||
+        entry.boundingClientRect.top < window.innerHeight
+      ) {
+        if (boundingClientRect.y <= 0) {
+          target.classList.add("fade-out-up"); // Add fade-out-up class
+        } else {
+          target.classList.add("fade-out-down"); // Add fade-out-down class
+        }
+      }
+    }
+  });
+};
+
+onMounted(() => {
+  // Create the IntersectionObserver
+  observer = new IntersectionObserver(handleIntersect, {
+    threshold: 0.1, // Trigger when 10% of the element is visible (more sensitive)
+    rootMargin: "0px 0px -50px 0px", // Trigger slightly before element comes into view
+  });
+
+  // Small delay to ensure DOM is fully rendered
+  setTimeout(() => {
+    document.querySelectorAll(".reveal").forEach((element) => {
+      observer?.observe(element);
+    });
+  }, 200);
+});
+
+onBeforeUnmount(() => {
+  // Clean up the observer when the component is unmounted
+  document.querySelectorAll(".reveal").forEach((element) => {
+    observer?.unobserve(element);
+  });
+});
 </script>
 
 <template>
@@ -15,7 +69,7 @@ import IcWhatsapp from "@/assets/icons/ic-whatsapp.svg";
       <!-- <source type="image/webp" srcset="@/assets/images/aiw-home-banner.webp" /> -->
       <img
         alt="home banner"
-        class="fade-in h-auto max-h-[750px] w-full object-cover"
+        class="reveal h-auto max-h-[750px] w-full object-cover"
         src="@/assets/images/aiw-banner-home.jpg"
       />
     </picture>
@@ -27,12 +81,12 @@ import IcWhatsapp from "@/assets/icons/ic-whatsapp.svg";
         alt="aiw logo nav"
         width="80px"
         height="20px"
-        class="fade-in absolute top-8 left-6"
+        class="reveal absolute top-8 left-6"
         src="@/assets/images/aiw-logo-nav.png"
       />
     </picture>
 
-    <div class="fade-in mt-8 flex-grow px-4 text-center md:mt-12 lg:mt-16">
+    <div class="reveal mt-8 flex-grow px-4 text-center md:mt-12 lg:mt-16">
       <p class="text-xl font-bold md:text-2xl lg:text-3xl">
         A place to explore Artificial Intelligence for everyone—beyond technological wonders.
       </p>
@@ -64,12 +118,13 @@ import IcWhatsapp from "@/assets/icons/ic-whatsapp.svg";
           alt="aiw logo footer"
           width="142px"
           height="44px"
-          class="fade-in mx-1"
+          class="reveal mx-1"
+          loading="lazy"
           src="@/assets/images/aiw-logo-footer.png"
         />
       </picture>
 
-      <div class="fade-in mt-5">
+      <div class="reveal mt-5">
         <strong class="text-sm md:text-base">PT. Sobat Karya Membara</strong>
         <address class="text-xs not-italic md:text-sm">
           Belleza Shopping Arcade Lt. 3 unit 371,<br />
@@ -79,7 +134,7 @@ import IcWhatsapp from "@/assets/icons/ic-whatsapp.svg";
         </address>
       </div>
 
-      <div class="fade-in mt-4">
+      <div class="reveal mt-4">
         <strong class="text-sm md:text-base">Contact Us</strong>
 
         <div class="flex items-center justify-between gap-4">
