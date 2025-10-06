@@ -79,16 +79,15 @@ onUnmounted(() => {
 
 <template>
   <div class="relative container mx-auto max-w-[2400px]">
-    <picture>
-      <!-- <source type="image/avif" srcset="@/assets/images/aiw-home-banner.avif" /> -->
-      <!-- <source type="image/webp" srcset="@/assets/images/aiw-home-banner.webp" /> -->
-      <source media="(min-width: 1280px)" srcset="@/assets/images/aiw-banner-home-lg.jpg" />
-      <img
+      <picture>
+        <!-- <source type="image/avif" srcset="@/assets/images/aiw-home-banner.avif" /> -->
+        <!-- <source type="image/webp" srcset="@/assets/images/aiw-home-banner.webp" /> -->
+        <img
         alt="home banner"
-        class="reveal h-auto w-full object-cover"
-        src="@/assets/images/aiw-banner-home.jpg"
-      />
-    </picture>
+        class="w-full object-cover object-top min-h-64"
+        src="@/assets/images/aiw-banner-home.png"
+        />
+      </picture>
 
     <div class="absolute top-0 right-0 left-0 mx-auto max-w-7xl px-4 pt-6 md:pt-8">
       <!-- <IcMenu width="30px" height="20px" viewBox="0 0 25 17" class="absolute top-8 right-6" /> -->
@@ -96,7 +95,7 @@ onUnmounted(() => {
       <picture>
         <!-- <source type="image/avif" srcset="@/assets/images/aiw-home-banner.avif" /> -->
         <!-- <source type="image/webp" srcset="@/assets/images/aiw-home-banner.webp" /> -->
-        <img alt="aiw logo nav" src="@/assets/images/aiw-logo-nav.png" class="h-6 md:h-8" />
+        <img alt="aiw logo nav" src="@/assets/images/aiw-logo-nav.png" class="h-4 md:h-6 lg:h-8" />
       </picture>
     </div>
 
