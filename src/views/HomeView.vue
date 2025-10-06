@@ -9,7 +9,7 @@ import Footer from "@/components/Footer.vue";
       <source type="image/webp" srcset="@/assets/images/aiw-banner-home.webp" />
       <img
         alt="home banner"
-        class="reveal min-h-64 w-full object-cover object-top"
+        class="reveal min-h-60 w-full object-cover object-top"
         src="@/assets/images/aiw-banner-home.png"
       />
     </picture>
